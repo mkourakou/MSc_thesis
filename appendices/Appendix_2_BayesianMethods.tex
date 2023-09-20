@@ -1,0 +1,83 @@
+\clearpage
+\chapter{Probability, Bayesian Method and Sampling} \label{app:Bayes}
+
+
+
+The following sections that review probability and illuminate Bayesian statistics are heavily based on the lecture notes of Elena Sellentin\footnote{\url{https://github.com/elenasellentin/Modern-Astrostatistics}}.
+ 
+%----------------------------------------------------------------------%
+%----------------------------------------------------------------------%
+%----------------------------------------------------------------------%
+\section{Interpretations of Probability} 
+Multiple concepts of "probability" have emerged over the centuries and can be unified on a mathematical level by measure theory.
+
+\subsection*{\textit{σ}-Algebras}
+For set $S$, the powerset $\mathcal{S}$ is the set of all subsets of $S$ (including the \{$ \emptyset $ \} ).
+A $\sigma$-Algebra indicates countability or measurability (it is an extended notion of counting) and is defined:
+\begin{itemize}
+    \item Let $\mathcal{A} \subseteq \mathcal{S}(S)$ be some subset of the powerset of $S$
+    \item $\mathcal{A}$ is a $\sigma$-Algebra if:
+    \begin{enumerate}
+        \item $\emptyset$ and $S \in  \mathcal{A}$  \;\;(indicates the notion of nothing and all)
+        \item for all $A \in \mathcal{A}\; \Rightarrow{ } \; \overline{A}\; \coloneqq \;S/A \in \mathcal{A}$  \;\;($\overline{A}$ is the complement of $A$, indicating consistency) 
+        \item for $A_i \in  \mathcal{A}$ with $i \in \mathbb{N}$, then $\Big( \bigcup\limits_{i=1}^{\infty} A_i\Big)\in \mathcal{A}$ \;\;(conjunctions of elements are countable, indicates countability)
+    \end{enumerate}
+    \item If $\mathcal{A}$ is a $\sigma$-Algebra, then all  $A_i \in  \mathcal{A}$ are "$\mathcal{A}$-measurable" subsets of $S$
+    \item For set $S$ and $\mathcal{A}$ a $\sigma$-Algebra on it, $\big( S, \mathcal{A}\big)$ is called a "measurable space".
+\end{itemize}
+It follows that if $S$ some set,  $I$ some range of integers  $I=[1,2,...,N]$ and many $\mathcal{A}_j$ ( $j\in I$) are $\sigma$-Algebras on $S$, then 
+\begin{equation*}
+    \bigcap\limits_{j=1}^{N} \mathcal{A}_j \mbox{ is a } \sigma\mbox{-Algebra on }S
+\end{equation*}
+which means that combined posteriors (Bayesian updating) of a probability measure of many experiments are again a probability.\\
+\subsection*{Measures}
+A measure can be a generalised notion of volume, and is defined:
+\begin{itemize}
+    \item If $\big( S, \mathcal{A}\big)$ a measurable space using set $S$ and $\sigma$-Algebra $\mathcal{A}$, then $$ \mu: \mathcal{A} \mapsto [0,\infty]$$
+    $\mu$ is called a "measure" if $[0,\infty]$ is $\mathbb{R}^+$, including $\infty$, and $\mu$ satisfies:
+    \begin{enumerate}
+        \item $\mu (A_i) \geq 0 \;\; \forall A_i\in \mathcal{A}\;\;$ (positive definite, generalisation of the first Kolmogorov axiom for probability measures)
+        \item $\mu(\emptyset) = 0 \;\;$ (empty set has measure zero, generalisation of the second Kolmogorov axiom for probability measures) 
+        \item for $A_i, A_k \in \mathcal{A}$, when $A_i\cap A_k = \emptyset \;\; \forall i\neq k$, then $$ \sum \limits_{i=1}^{\infty} \mu(A_i) = \mu\Big( \bigcup\limits_{i=1}^{\infty} A_i\Big)$$
+        (indicating $\sigma$-additivity, generalisation of the third Kolmogorov axiom for probability measures)
+    \end{enumerate}
+    \item If $\big( S, \mathcal{A}\big)$ a measurable space, then $\big( S, \mathcal{A}, \mu \big)$ a measure space
+    \item Let $\big( S, \mathcal{A}, \mu \big)$ a measure space,  $\mu$ is a probability measure 
+    $$ \mbox{if} \;\; \mu(S) = 1 $$
+\end{itemize}
+ 
+\subsection*{Lebesgue Integration}
+The Riemann integral is commonly used in physics where the function $f(x)$ integrated is of interest (instead of its domain of definition, which is usually the $\mathbb{R}^{\mbox{n}}$ space) and where usually the integrated function is sufficiently differentiable.\\
+In statistics, integration of a function needs to be performed with respect to a measure, and the data space can be Euclidean ($\mathbb{E}^{\mbox{n}}$) since it includes discrete events and continuous events alike, thus $\mathbb{R}^{\mbox{n}}$ is insufficient. Additionally, in statistics, parametres $\mathbf{\Theta}$ span a manifold (e.g. $\vec\Theta \otimes N $), and functions $f(x)$ can be degenerate distributions or have non-existent densities. The Lebesgue integral was introduced to handle such cases. The Lebesgue integral is an integral that runs over the a working set $\mathcal{X}$ with respect to a measure $\mu : \mathcal{A} \mapsto[0, \infty]$ of measure space $(\mathcal{X}, \mathcal{A}, \mu)$, using $\sigma$-Algebra $\mathcal{A}$ 
+\begin{equation*}
+    \int_{\mathcal{X}} \; f \; d\mu .
+\end{equation*}
+In Bayesian statistics, priors are probability measures against which Bayesian likelihoods are integrated (in the Lebesgue regime). Set $S$ is the sample space of Bayesian methods.
+
+
+%----------------------------------------------------------------------%
+%----------------------------------------------------------------------%
+%----------------------------------------------------------------------%
+\section{Bayesian Statistics}
+
+Equation \ref{eq:Bayes} is called Bayes’ theorem but it does not encode what is known as ‘Bayesian statistics’, it simply follows from the laws of probability manipulations.\\
+The aim of Bayesian statistics is to infer non-trivial conclusions given observables and domain expertise by marginalising on conditional probabilities. Bayesian Inference assigns "credibility" on non-observable quantities. Thence, the likelihood $\mathscr{L}$ factors signal and describes noise processes, the posterior $\mathscr{P}_{\mbox{\tiny{posterior}}}$ describes an attempt of inferring the parameter values from observed data x (inverse workflow of the likelihood), priors $\mathscr{P}_{\mbox{\tiny{prior}}}$ constrain the introduced parametres and the Bayesian evidence $\mathscr{E}$ is central for model selection. Uniform priors are not necessarily uninformative, since they do not stay flat under non-linear transformations. \\
+The posterior distribution can be marginalised over in order to extract information and constraining the parametres with the data essentially accomplishes the mapping of the posterior. Samples whose number density is proportional to the posterior probability $$n(\mathbf{\Theta}) \propto \mathscr{L}(\vec{D}|\mathbf{\Theta}) \mathscr{P}_{\mbox{\tiny{prior}}}(\mathbf{\Theta}) $$ provide a guess for a Gaussian approximation $\mathcal{G}_{\mbox{\tiny{P}}}(\mathbf{\Theta})$ to the posterior and can be used to make integration trivial. Thus, integration/marginalisation can be performed for all parameters the models as well as the observables.
+
+%----------------------------------------------------------------------%
+%----------------------------------------------------------------------%
+%----------------------------------------------------------------------%
+\section{Bayesian Sampling techniques}
+
+Bayesian sampling is achieved with numerical methods and many algorithms have been developed to achieve numerical feasibility for high dimensional posteriors. Brute Force Bayesian search, Markov Chain Monte Carlo (such as Gibbs sampling, Metropolis-Hastings sampling), Nested Sampling are some of those algorithms. \\
+The samples need to be representative of the distribution, otherwise biases are introduced. This means that only converged sampling sequences should be used and that (for Markov chains) random (instead of neighbouring) chainlinks must be selected for post-processing.\\
+Relevant software which implements Bayesian sampling algorithms that can be used in SED fitting codes such as the one developed for the present thesis are
+\begin{itemize}
+    \item \code{emcee}\footnote{\url{https://ascl.net/1303.002}} software\cite{emcee2013}, which implements the Affine-Invariant Ensemble Sampler\cite{EnsSampl_2010}
+    \item \code{ptemcee}\footnote{\url{https://ascl.net/2101.006}} software\cite{ptemcee2016}, which implements the Adaptive Parallel Tempering Ensemble Sampler\cite{ParalTemp_2014}\cite{ParalTemp_2005}
+    \item \code{dynesty}\footnote{\url{https://zenodo.org/record/7995596}} software\cite{Dynesty2020} which implements the Dynamic Nested Sampling algorithm\cite{Higson2019}
+    \item \code{UltraNest}\footnote{\url{https://ascl.net/1611.001}} software\cite{ultranest2021}, which implements the Reactive Nested Sampling algorithm\cite{NestSample_2016}\cite{NestSample_2019}
+\end{itemize}
+Nested Sampling algorithms are optimised to achieve a good approximation of the evidence and shape of the posterior with the most efficient possible sampling of parameter space. Unlike more traditional algorithms (e.g. MCMC), the primary aim is not to sample in detail the parameter space, although for a large number of live points this can be achieved.
+
+
